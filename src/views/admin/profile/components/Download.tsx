@@ -10,8 +10,8 @@ import {
 // Custom components
 import Card from 'components/card/Card';
 // Assets
-import { MdUpload } from 'react-icons/md';
-import Dropzone from 'views/admin/profile/components/Dropzone';
+import { MdUpload, MdDownload } from 'react-icons/md';
+import Dropzone from 'views/admin/profile/components/Dropzone-download';
 
 export default function Upload(props: {
   used?: number;
@@ -29,18 +29,18 @@ export default function Upload(props: {
         <Dropzone
           w={400}
           me='36px'
-          //   maxH={{ base: '60%', lg: '50%', '2xl': '100%' }}
-          //   minH={{ base: '60%', lg: '50%', '2xl': '100%' }}
+          maxH={{ base: '60%', lg: '50%', '2xl': '100%' }}
+          // minH={{ base: '60%', lg: '50%', '2xl': '100%' }}
           content={
             <Box>
-              <Icon as={MdUpload} w='80px' h='80px' color={brandColor} />
+              <Icon as={MdDownload} w='80px' h='80px' color={brandColor} />
               <Flex justify='center' mx='auto' mb='12px'>
                 <Text fontSize='xl' fontWeight='700' color={brandColor}>
-                  Upload Excel Files
+                  Download Excel Files
                 </Text>
               </Flex>
               <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
-                xlsx, xls are allowed
+                Example template for upload meta data file
               </Text>
             </Box>
           }

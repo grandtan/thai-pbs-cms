@@ -27,7 +27,6 @@ import {
   FormLabel,
   Icon,
   Progress,
-  Select,
   SimpleGrid,
   useColorModeValue,
   Text,
@@ -38,10 +37,11 @@ import {
   InputGroup,
   Input,
   Checkbox,
+  Select,
 } from '@chakra-ui/react';
 // Assets
 // Custom components
-
+import { MdUpload } from 'react-icons/md';
 import AdminLayout from 'layouts/admin';
 import { Image } from 'components/image/Image';
 import Usa from 'img/dashboards/usa.png';
@@ -49,30 +49,31 @@ import Card from 'components/card/Card';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import React from 'react';
+import { Form } from 'antd';
+import { listGenres, listSeason } from 'utils/list';
+import SwitchField from 'components/fields/SwitchField';
+import Dropzone from 'react-dropzone';
+import Upload from 'views/admin/profile/components/Upload';
+import Download from 'views/admin/profile/components/Download';
 
 export default function UserReports() {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
+  const [formUpdate] = Form.useForm();
+
+  const onFinish = (value: object) => {
+    // setLoading(true);
+    console.log(value);
+  };
 
   const brandColor = useColorModeValue('brand.500', 'white');
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const textColorBrand = useColorModeValue('brand.500', 'white');
+  const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   // const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
 
   const brandStars = useColorModeValue('brand.500', 'brand.400');
-  const googleBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.200');
-  const googleText = useColorModeValue('navy.700', 'white');
-  const googleHover = useColorModeValue(
-    { bg: 'gray.200' },
-    { bg: 'whiteAlpha.300' }
-  );
-  const googleActive = useColorModeValue(
-    { bg: 'secondaryGray.300' },
-    { bg: 'whiteAlpha.200' }
-  );
 
   return (
     <AdminLayout>
@@ -96,95 +97,237 @@ export default function UserReports() {
                   fontWeight='700'
                   lineHeight='100%'
                 >
-                  {'Upload & Meta Data'}
+                  {'Upload & Download'}
                 </Text>
               </Flex>
 
-              <Flex
-                px='25px'
-                zIndex='2'
-                direction='column'
-                w={{ base: '100%', md: '420px' }}
-                maxW='100%'
-                background='transparent'
-                borderRadius='15px'
-                mx={{ base: 'auto', lg: 'unset' }}
-                me='auto'
-                mt='25px'
-                mb={{ base: '20px', md: 'auto' }}
-              >
-                <FormControl>
-                  <FormLabel
-                    display='flex'
-                    ms='4px'
-                    fontSize='sm'
-                    fontWeight='500'
-                    color={textColor}
-                    mb='8px'
-                  >
-                    Email<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <Input
-                    isRequired={true}
-                    variant='auth'
-                    fontSize='sm'
-                    ms={{ base: '0px', md: '0px' }}
-                    type='text'
-                    placeholder='mail@simmmple.com'
-                    mb='24px'
-                    fontWeight='500'
-                    size='lg'
-                  />
-                  <FormLabel
-                    ms='4px'
-                    fontSize='sm'
-                    fontWeight='500'
-                    color={textColor}
-                    display='flex'
-                  >
-                    Password<Text color={brandStars}>*</Text>
-                  </FormLabel>
-                  <InputGroup size='md'>
-                    <Input
-                      isRequired={true}
-                      fontSize='sm'
-                      placeholder='Min. 8 characters'
-                      mb='24px'
-                      size='lg'
-                      type={ 'text' }
-                      variant='auth'
-                    />
-                    <InputRightElement
-                      display='flex'
-                      alignItems='center'
-                      mt='4px'
-                    >
-                      <Icon
-                        color={textColorSecondary}
-                        _hover={{ cursor: 'pointer' }}
-                        as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                        onClick={handleClick}
-                      />
-                    </InputRightElement>
-                  </InputGroup>
-
-                  <Flex
-                    justifyContent='space-between'
-                    align='center'
-                    mb='24px'
-                  ></Flex>
-                  <Button
-                    fontSize='sm'
-                    variant='brand'
-                    fontWeight='500'
-                    w='100%'
-                    h='50'
-                    mb='24px'
-                  >
-                    Submit
-                  </Button>
-                </FormControl>
+              <div style={{ display: 'flex' }}>
+                <Download
+                  gridArea={{
+                    base: '3 / 1 / 4 / 2',
+                    lg: '1 / 3 / 2 / 4',
+                  }}
+                  // minH={{ base: 'auto', lg: '420px', '2xl': '365px' }}
+                  pe='20px'
+                  pb={{ base: '100px', lg: '20px' }}
+                />
+                <Upload
+                  gridArea={{
+                    base: '3 / 1 / 4 / 2',
+                    lg: '1 / 3 / 2 / 4',
+                  }}
+                  // minH={{ base: 'auto', lg: '420px', '2xl': '365px' }}
+                  pe='20px'
+                  pb={{ base: '100px', lg: '20px' }}
+                />
+              </div>
+            </Card>
+            <Card
+              flexDirection='column'
+              w='100%'
+              px='0px'
+              overflowX={{ sm: 'scroll', lg: 'hidden' }}
+            >
+              <Flex px='25px' justify='space-between' mb='10px' align='center'>
+                <Text
+                  color={textColor}
+                  fontSize='22px'
+                  fontWeight='700'
+                  lineHeight='100%'
+                >
+                  {' Meta Data'}
+                </Text>
               </Flex>
+
+              <div style={{ padding: 40 }}>
+                <Form
+                  form={formUpdate}
+                  name='basic'
+                  labelCol={{ span: 24 }}
+                  wrapperCol={{ span: 24 }}
+                  style={{ width: '100%' }}
+                  autoComplete='off'
+                  layout='vertical'
+                  onFinish={onFinish}
+                >
+                  <SimpleGrid
+                    columns={{ base: 1, md: 3, xl: 3 }}
+                    gap='20px'
+                    mb='20px'
+                  >
+                    <Form.Item
+                      name='clipName'
+                      label='Clip Name'
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Clip name is required',
+                        },
+                      ]}
+                    >
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item
+                      name='titleThai'
+                      label='Title Thai'
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Title thai is required',
+                        },
+                      ]}
+                    >
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='File Type' name='fileType'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Frame Rate' name='frameRate'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Video Codec'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Audio File Type' name='audioFileType'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Audio Bit Depth' name='audioBitDepth'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Audio Sample Rate' name='audioSampleRate'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Audio CH1'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Audio CH2'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Audio CH3'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Audio CH4'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Duration'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Title English'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Artist'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Audio Description'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Close Caption'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Sign Language'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Episode No.'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Episode Title'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Season'>
+                      <Select size='md' borderRadius='16px'>
+                        {listSeason.map((e) => (
+                          <option value={e.value} key={e.value}>
+                            {e.label}
+                          </option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <Form.Item label='Synopsis Episode'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Tags'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Genres'>
+                      <Select size='md' borderRadius='16px'>
+                        {listGenres.map((e) => (
+                          <option value={e.value} key={e.value}>
+                            {e.label}
+                          </option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <Form.Item label='Sub genres'>
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item label='Start Date'>
+                      <Input size='md' borderRadius='16px' type='date' />
+                    </Form.Item>
+                    <Form.Item label='Expire Date'>
+                      <Input size='md' borderRadius='16px' type='date' />
+                    </Form.Item>
+                    <Form.Item label='Expire Date'>
+                      <Input size='md' borderRadius='16px' type='date' />
+                    </Form.Item>
+                    <Form.Item label='Synopsis'>
+                      {/* aear */}
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+
+                    <div></div>
+
+                    <Form.Item label='' valuePropName='checked'>
+                      <SwitchField
+                        isChecked={true}
+                        reversed={true}
+                        fontSize='sm'
+                        mb='20px'
+                        id='1'
+                        label='ON VIPA'
+                      />
+                    </Form.Item>
+                    <Form.Item label='' valuePropName='checked'>
+                      <SwitchField
+                        isChecked={true}
+                        reversed={true}
+                        fontSize='sm'
+                        mb='20px'
+                        id='1'
+                        label='ON THAIPBS'
+                      />
+                    </Form.Item>
+                    <Form.Item label='' valuePropName='checked'>
+                      <SwitchField
+                        isChecked={true}
+                        reversed={true}
+                        fontSize='sm'
+                        mb='20px'
+                        id='1'
+                        label='ON ALTV'
+                      />
+                    </Form.Item>
+                  </SimpleGrid>
+                </Form>
+              </div>
+
+              <Flex
+                justifyContent='space-between'
+                align='center'
+                mb='24px'
+              ></Flex>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button
+                  onClick={() => formUpdate.submit()}
+                  fontSize='sm'
+                  variant='brand'
+                  fontWeight='500'
+                  w={200}
+                  h='50'
+                  mb='24px'
+                >
+                  Submit
+                </Button>
+              </div>
             </Card>
           </SimpleGrid>
         </>

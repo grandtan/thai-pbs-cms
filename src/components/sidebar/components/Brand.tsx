@@ -14,7 +14,7 @@ export function SidebarBrand() {
   return (
     <Flex alignItems='center' flexDirection='column'>
       {/* <HorizonLogo h='26px' w='175px' my='32px' color={logoColor} /> */}
-      <div style={{  marginRight:14}}>
+      <div style={{ marginRight: 18 }}>
         <Image src={logoThaipbs} width='140' height='60' alt='logo' />
       </div>
 
