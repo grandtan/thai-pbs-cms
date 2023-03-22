@@ -129,7 +129,7 @@ export default function UserReports() {
                     variant='auth'
                     fontSize='sm'
                     ms={{ base: '0px', md: '0px' }}
-                    type='email'
+                    type='text'
                     placeholder='mail@simmmple.com'
                     mb='24px'
                     fontWeight='500'
@@ -151,7 +151,7 @@ export default function UserReports() {
                       placeholder='Min. 8 characters'
                       mb='24px'
                       size='lg'
-                      type={show ? 'text' : 'password'}
+                      type={ 'text' }
                       variant='auth'
                     />
                     <InputRightElement
