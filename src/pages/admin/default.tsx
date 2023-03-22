@@ -61,7 +61,7 @@ export default function UserReports() {
 
   const onFinish = (value: object) => {
     // setLoading(true);
-    console.log(value);
+    console.log('value', value);
   };
 
   const brandColor = useColorModeValue('brand.500', 'white');
@@ -75,6 +75,12 @@ export default function UserReports() {
 
   const brandStars = useColorModeValue('brand.500', 'brand.400');
 
+  const textTitle = (text: string) => (
+    <Text color={textColorPrimary} fontWeight='500' fontSize='md' mb='4px'>
+      {text}
+    </Text>
+  );
+
   return (
     <AdminLayout>
       <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
@@ -84,6 +90,47 @@ export default function UserReports() {
             gap='20px'
             mb='20px'
           >
+            <Card
+              flexDirection='column'
+              w='100%'
+              px='0px'
+              overflowX={{ sm: 'scroll', lg: 'hidden' }}
+            >
+              <Flex px='25px' justify='space-between' mb='10px' align='center'>
+                <Text
+                  color={textColor}
+                  fontSize='22px'
+                  fontWeight='700'
+                  lineHeight='100%'
+                >
+                  {'Upload Video'}
+                </Text>
+              </Flex>
+              <Flex
+                justifyContent='space-between'
+                align='center'
+                mb='24px'
+              ></Flex>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <a
+                  target='_blank'
+                  href='https://ingestprogram.thaipbs.or.th/sharing/brFaHySol'
+                  rel='noopener noreferrer'
+                >
+                  <Button
+                    onClick={() => formUpdate.submit()}
+                    fontSize='sm'
+                    variant='brand'
+                    fontWeight='500'
+                    w={200}
+                    h='50'
+                    mb='24px'
+                  >
+                    Click Upload
+                  </Button>
+                </a>
+              </div>
+            </Card>
             <Card
               flexDirection='column'
               w='100%'
@@ -157,7 +204,7 @@ export default function UserReports() {
                   >
                     <Form.Item
                       name='clipName'
-                      label='Clip Name'
+                      label={textTitle('Clip Name')}
                       rules={[
                         {
                           required: true,
@@ -165,11 +212,16 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input size='md' borderRadius='16px' />
+                      <Input
+                        size='md'
+                        borderRadius='16px'
+                        // isInvalid
+                      />
                     </Form.Item>
+
                     <Form.Item
                       name='titleThai'
-                      label='Title Thai'
+                      label={textTitle('Title Thai')}
                       rules={[
                         {
                           required: true,
@@ -179,61 +231,70 @@ export default function UserReports() {
                     >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='File Type' name='fileType'>
+                    <Form.Item label={textTitle('File Type')} name='fileType'>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Frame Rate' name='frameRate'>
+                    <Form.Item label={textTitle('Frame Rate')} name='frameRate'>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Video Codec'>
+                    <Form.Item label={textTitle('Video Codec')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Audio File Type' name='audioFileType'>
+                    <Form.Item
+                      label={textTitle('Audio File Type')}
+                      name='audioFileType'
+                    >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Audio Bit Depth' name='audioBitDepth'>
+                    <Form.Item
+                      label={textTitle('Audio Bit Depth')}
+                      name='audioBitDepth'
+                    >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Audio Sample Rate' name='audioSampleRate'>
+                    <Form.Item
+                      label={textTitle('Audio Sample Rate')}
+                      name='audioSampleRate'
+                    >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Audio CH1'>
+                    <Form.Item label={textTitle('Audio CH1')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Audio CH2'>
+                    <Form.Item label={textTitle('Audio CH2')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Audio CH3'>
+                    <Form.Item label={textTitle('Audio CH3')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Audio CH4'>
+                    <Form.Item label={textTitle('Audio CH4')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Duration'>
+                    <Form.Item label={textTitle('Duration')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Title English'>
+                    <Form.Item label={textTitle('Title English')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Artist'>
+                    <Form.Item label={textTitle('Artist')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Audio Description'>
+                    <Form.Item label={textTitle('Audio Description')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Close Caption'>
+                    <Form.Item label={textTitle('Close Caption')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Sign Language'>
+                    <Form.Item label={textTitle('Sign Language')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Episode No.'>
+                    <Form.Item label={textTitle('Episode No.')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Episode Title'>
+                    <Form.Item label={textTitle('Episode Title')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Season'>
+                    <Form.Item label={textTitle('Season')}>
                       <Select size='md' borderRadius='16px'>
                         {listSeason.map((e) => (
                           <option value={e.value} key={e.value}>
@@ -242,13 +303,13 @@ export default function UserReports() {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item label='Synopsis Episode'>
+                    <Form.Item label={textTitle('Synopsis Episode')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Tags'>
+                    <Form.Item label={textTitle('Tags')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Genres'>
+                    <Form.Item label={textTitle('Genres')}>
                       <Select size='md' borderRadius='16px'>
                         {listGenres.map((e) => (
                           <option value={e.value} key={e.value}>
@@ -257,19 +318,19 @@ export default function UserReports() {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item label='Sub genres'>
+                    <Form.Item label={textTitle('Sub genres')}>
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label='Start Date'>
+                    <Form.Item label={textTitle('Start Date')}>
                       <Input size='md' borderRadius='16px' type='date' />
                     </Form.Item>
-                    <Form.Item label='Expire Date'>
+                    <Form.Item label={textTitle('Expire Date')}>
                       <Input size='md' borderRadius='16px' type='date' />
                     </Form.Item>
-                    <Form.Item label='Expire Date'>
+                    <Form.Item label={textTitle('Expire Date')}>
                       <Input size='md' borderRadius='16px' type='date' />
                     </Form.Item>
-                    <Form.Item label='Synopsis'>
+                    <Form.Item label={textTitle('Synopsis')}>
                       {/* aear */}
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
