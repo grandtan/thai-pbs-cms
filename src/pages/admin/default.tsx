@@ -55,6 +55,8 @@ import SwitchField from 'components/fields/SwitchField';
 import Dropzone from 'react-dropzone';
 import Upload from 'views/admin/profile/components/Upload';
 import Download from 'views/admin/profile/components/Download';
+import axios, { AxiosInstance } from 'axios';
+import https from 'https';
 
 export default function UserReports() {
   const [formUpdate] = Form.useForm();
@@ -63,6 +65,30 @@ export default function UserReports() {
     // setLoading(true);
     console.log('value', value);
   };
+
+  async function fetchData() {
+    try {
+      const axiosInstance: AxiosInstance = axios.create({
+        baseURL: 'https://172.16.81.13:8006/api/v2/',
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: false,
+        }),
+        auth: {
+          username: 'tan',
+          password: '54nudge54',
+        },
+      });
+
+      const response = await axiosInstance.get('search', {
+        params: {
+          filename: 'V0003172-AIR.mxf',
+        },
+      });
+      console.log('ddd: ', response.data);
+    } catch (error) {
+      console.error('error :', error);
+    }
+  }
 
   const brandColor = useColorModeValue('brand.500', 'white');
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
