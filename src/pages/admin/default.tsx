@@ -48,8 +48,8 @@ import Usa from 'img/dashboards/usa.png';
 import Card from 'components/card/Card';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import React, { useEffect } from 'react';
-import { Form } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Spin } from 'antd';
 import { listGenres, listSeason } from 'utils/list';
 import SwitchField from 'components/fields/SwitchField';
 import Dropzone from 'react-dropzone';
@@ -57,9 +57,13 @@ import Upload from 'views/admin/profile/components/Upload';
 import Download from 'views/admin/profile/components/Download';
 import axios, { AxiosInstance } from 'axios';
 import https from 'https';
+import FadeIn from 'react-fade-in';
+import Lottie from 'lottie-react';
+import loading from '../../../public/loading.json';
 
 export default function UserReports() {
   const [formUpdate] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(true);
 
   const onFinish = (value: object) => {
     // setLoading(true);
@@ -402,7 +406,7 @@ export default function UserReports() {
                   >
                     <Form.Item
                       name='isvipa'
-                      label='ON VIPA'
+                      label={textTitle('ON VIPA')}
                       valuePropName='checked'
                     >
                       <SwitchField
@@ -415,7 +419,7 @@ export default function UserReports() {
                     </Form.Item>
                     <Form.Item
                       name='isThaipbs'
-                      label='ON THAIPBS'
+                      label={textTitle('ON THAIPBS')}
                       valuePropName='checked'
                     >
                       <SwitchField
@@ -427,8 +431,8 @@ export default function UserReports() {
                       />
                     </Form.Item>
                     <Form.Item
+                      label={textTitle('ON ALTV')}
                       name='isAltv'
-                      label='ON ALTV'
                       valuePropName='checked'
                     >
                       <SwitchField
