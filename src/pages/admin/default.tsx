@@ -48,7 +48,7 @@ import Usa from 'img/dashboards/usa.png';
 import Card from 'components/card/Card';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form } from 'antd';
 import { listGenres, listSeason } from 'utils/list';
 import SwitchField from 'components/fields/SwitchField';
@@ -66,7 +66,10 @@ export default function UserReports() {
     console.log('value', value);
   };
 
-  async function fetchData() {
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
     try {
       const axiosInstance: AxiosInstance = axios.create({
         baseURL: 'https://172.16.81.13:8006/api/v2/',
@@ -88,7 +91,7 @@ export default function UserReports() {
     } catch (error) {
       console.error('error :', error);
     }
-  }
+  };
 
   const brandColor = useColorModeValue('brand.500', 'white');
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
@@ -224,13 +227,13 @@ export default function UserReports() {
                   onFinish={onFinish}
                 >
                   <SimpleGrid
-                    columns={{ base: 1, md: 3, xl: 3 }}
+                    columns={{ base: 1, md: 2, xl: 2 }}
                     gap='20px'
                     mb='20px'
                   >
                     <Form.Item
                       name='clipName'
-                      label={textTitle('Clip Name')}
+                      label={textTitle('Clip Name(ID)')}
                       rules={[
                         {
                           required: true,
@@ -244,7 +247,13 @@ export default function UserReports() {
                         // isInvalid
                       />
                     </Form.Item>
+                  </SimpleGrid>
 
+                  <SimpleGrid
+                    columns={{ base: 1, md: 2, xl: 2 }}
+                    gap='20px'
+                    mb='20px'
+                  >
                     <Form.Item
                       name='titleThai'
                       label={textTitle('Title Thai')}
@@ -257,70 +266,40 @@ export default function UserReports() {
                     >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label={textTitle('File Type')} name='fileType'>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Frame Rate')} name='frameRate'>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Video Codec')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
                     <Form.Item
-                      label={textTitle('Audio File Type')}
-                      name='audioFileType'
+                      name='episodeTitle'
+                      label={textTitle('Episode Title')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Episode title is required',
+                        },
+                      ]}
                     >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
                     <Form.Item
-                      label={textTitle('Audio Bit Depth')}
-                      name='audioBitDepth'
+                      name='episodeNo'
+                      label={textTitle('Episode No.')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Episode No. is required',
+                        },
+                      ]}
                     >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
                     <Form.Item
-                      label={textTitle('Audio Sample Rate')}
-                      name='audioSampleRate'
+                      name='season'
+                      label={textTitle('Season')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Season is required',
+                        },
+                      ]}
                     >
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Audio CH1')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Audio CH2')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Audio CH3')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Audio CH4')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Duration')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Title English')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Artist')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Audio Description')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Close Caption')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Sign Language')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Episode No.')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Episode Title')}>
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Season')}>
                       <Select size='md' borderRadius='16px'>
                         {listSeason.map((e) => (
                           <option value={e.value} key={e.value}>
@@ -329,13 +308,53 @@ export default function UserReports() {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item label={textTitle('Synopsis Episode')}>
+
+                    <Form.Item
+                      name='titleEnglish'
+                      label={textTitle('Title English')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Title english is required',
+                        },
+                      ]}
+                    >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label={textTitle('Tags')}>
+                    <Form.Item
+                      name='synopsis'
+                      label={textTitle('Synopsis')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Synopsis is required',
+                        },
+                      ]}
+                    >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label={textTitle('Genres')}>
+                    <Form.Item
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Synopsis episode is required',
+                        },
+                      ]}
+                      name='synopsisEpisode'
+                      label={textTitle('Synopsis Episode')}
+                    >
+                      <Input size='md' borderRadius='16px' />
+                    </Form.Item>
+                    <Form.Item
+                      name='genres'
+                      label={textTitle('Genres')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Genres is required',
+                        },
+                      ]}
+                    >
                       <Select size='md' borderRadius='16px'>
                         {listGenres.map((e) => (
                           <option value={e.value} key={e.value}>
@@ -344,53 +363,80 @@ export default function UserReports() {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item label={textTitle('Sub genres')}>
+                    <Form.Item
+                      name='tage'
+                      label={textTitle('Tags')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Tage is required',
+                        },
+                      ]}
+                    >
                       <Input size='md' borderRadius='16px' />
                     </Form.Item>
-                    <Form.Item label={textTitle('Start Date')}>
+                    <Form.Item
+                      name='startDate'
+                      label={textTitle('Start Date')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Start Date is required',
+                        },
+                      ]}
+                    >
                       <Input size='md' borderRadius='16px' type='date' />
                     </Form.Item>
-                    <Form.Item label={textTitle('Expire Date')}>
+                    <Form.Item
+                      name='expireDate'
+                      label={textTitle('Expire Date')}
+                    >
                       <Input size='md' borderRadius='16px' type='date' />
                     </Form.Item>
-                    <Form.Item label={textTitle('Expire Date')}>
-                      <Input size='md' borderRadius='16px' type='date' />
-                    </Form.Item>
-                    <Form.Item label={textTitle('Synopsis')}>
-                      {/* aear */}
-                      <Input size='md' borderRadius='16px' />
-                    </Form.Item>
+                  </SimpleGrid>
 
-                    <div></div>
-
-                    <Form.Item label='' valuePropName='checked'>
+                  <SimpleGrid
+                    columns={{ base: 1, md: 3, xl: 3 }}
+                    gap='1px'
+                    mb='20px'
+                  >
+                    <Form.Item
+                      name='isvipa'
+                      label='ON VIPA'
+                      valuePropName='checked'
+                    >
                       <SwitchField
-                        isChecked={true}
+                        // isChecked={true}
                         reversed={true}
                         fontSize='sm'
                         mb='20px'
                         id='1'
-                        label='ON VIPA'
                       />
                     </Form.Item>
-                    <Form.Item label='' valuePropName='checked'>
+                    <Form.Item
+                      name='isThaipbs'
+                      label='ON THAIPBS'
+                      valuePropName='checked'
+                    >
                       <SwitchField
-                        isChecked={true}
+                        // isChecked={true}
                         reversed={true}
                         fontSize='sm'
                         mb='20px'
                         id='1'
-                        label='ON THAIPBS'
                       />
                     </Form.Item>
-                    <Form.Item label='' valuePropName='checked'>
+                    <Form.Item
+                      name='isAltv'
+                      label='ON ALTV'
+                      valuePropName='checked'
+                    >
                       <SwitchField
-                        isChecked={true}
+                        // isChecked={true}
                         reversed={true}
                         fontSize='sm'
                         mb='20px'
                         id='1'
-                        label='ON ALTV'
                       />
                     </Form.Item>
                   </SimpleGrid>
