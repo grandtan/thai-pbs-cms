@@ -312,30 +312,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <InputAntd size='large' />
-                    </Form.Item>
-                    <Form.Item
-                      name='synopsis'
-                      label={textTitle('Synopsis')}
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Synopsis is required',
-                        },
-                      ]}
-                    >
-                      <InputAntd size='large' />
-                    </Form.Item>
-                    <Form.Item
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Synopsis episode is required',
-                        },
-                      ]}
-                      name='synopsisEpisode'
-                      label={textTitle('Synopsis Episode')}
-                    >
+                      {/* <TextArea /> */}
                       <InputAntd size='large' />
                     </Form.Item>
                     <Form.Item
@@ -353,14 +330,33 @@ export default function UserReports() {
                         options={listGenres}
                         // style={{ borderRadius: '200px' }}
                       />
-                      {/* <Select size='md' borderRadius='16px'>
-                        {listGenres.map((e) => (
-                          <option value={e.value} key={e.value}>
-                            {e.label}
-                          </option>
-                        ))}
-                      </Select> */}
                     </Form.Item>
+                    <Form.Item
+                      name='synopsis'
+                      label={textTitle('Synopsis')}
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Synopsis is required',
+                        },
+                      ]}
+                    >
+                      <TextArea />
+                    </Form.Item>
+                    <Form.Item
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Synopsis episode is required',
+                        },
+                      ]}
+                      name='synopsisEpisode'
+                      label={textTitle('Synopsis Episode')}
+                    >
+                      {/* <InputAntd size='large' /> */}
+                      <TextArea />
+                    </Form.Item>
+
                     <Form.Item
                       name='tage'
                       label={textTitle('Tags')}
