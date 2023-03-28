@@ -1,5 +1,5 @@
 body {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 option {
@@ -14,3 +14,11 @@ option {
   background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 }
+
+/* .ant-select-selector {
+  color: 'red' !important;
+} */
+
+/* .select-custom-antd {
+  width: 100 !important;
+} */

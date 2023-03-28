@@ -49,17 +49,16 @@ import Card from 'components/card/Card';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import React, { useEffect, useState } from 'react';
-import { Form, Spin } from 'antd';
+import { DatePicker, Form, Spin, Switch } from 'antd';
 import { listGenres, listSeason } from 'utils/list';
-import SwitchField from 'components/fields/SwitchField';
+
 import Dropzone from 'react-dropzone';
 import Upload from 'views/admin/profile/components/Upload';
 import Download from 'views/admin/profile/components/Download';
 import axios, { AxiosInstance } from 'axios';
 import https from 'https';
-import FadeIn from 'react-fade-in';
-import Lottie from 'lottie-react';
-import loading from '../../../public/loading.json';
+import { Input as InputAntd, Select as SelectAntd } from 'antd';
+const { TextArea } = InputAntd;
 
 export default function UserReports() {
   const [formUpdate] = Form.useForm();
@@ -245,11 +244,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input
-                        size='md'
-                        borderRadius='16px'
-                        // isInvalid
-                      />
+                      <InputAntd size='large' />
                     </Form.Item>
                   </SimpleGrid>
 
@@ -268,7 +263,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input size='md' borderRadius='16px' />
+                      <TextArea />
                     </Form.Item>
                     <Form.Item
                       name='episodeTitle'
@@ -280,7 +275,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input size='md' borderRadius='16px' />
+                      <TextArea />
                     </Form.Item>
                     <Form.Item
                       name='episodeNo'
@@ -292,7 +287,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input size='md' borderRadius='16px' />
+                      <InputAntd size='large' />
                     </Form.Item>
                     <Form.Item
                       name='season'
@@ -304,13 +299,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Select size='md' borderRadius='16px'>
-                        {listSeason.map((e) => (
-                          <option value={e.value} key={e.value}>
-                            {e.label}
-                          </option>
-                        ))}
-                      </Select>
+                      <SelectAntd size='large' options={listSeason} />
                     </Form.Item>
 
                     <Form.Item
@@ -323,7 +312,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input size='md' borderRadius='16px' />
+                      <InputAntd size='large' />
                     </Form.Item>
                     <Form.Item
                       name='synopsis'
@@ -335,7 +324,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input size='md' borderRadius='16px' />
+                      <InputAntd size='large' />
                     </Form.Item>
                     <Form.Item
                       rules={[
@@ -347,7 +336,7 @@ export default function UserReports() {
                       name='synopsisEpisode'
                       label={textTitle('Synopsis Episode')}
                     >
-                      <Input size='md' borderRadius='16px' />
+                      <InputAntd size='large' />
                     </Form.Item>
                     <Form.Item
                       name='genres'
@@ -359,13 +348,18 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Select size='md' borderRadius='16px'>
+                      <SelectAntd
+                        size='large'
+                        options={listGenres}
+                        // style={{ borderRadius: '200px' }}
+                      />
+                      {/* <Select size='md' borderRadius='16px'>
                         {listGenres.map((e) => (
                           <option value={e.value} key={e.value}>
                             {e.label}
                           </option>
                         ))}
-                      </Select>
+                      </Select> */}
                     </Form.Item>
                     <Form.Item
                       name='tage'
@@ -377,7 +371,7 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input size='md' borderRadius='16px' />
+                      <InputAntd size='large' />
                     </Form.Item>
                     <Form.Item
                       name='startDate'
@@ -389,13 +383,21 @@ export default function UserReports() {
                         },
                       ]}
                     >
-                      <Input size='md' borderRadius='16px' type='date' />
+                      <DatePicker
+                        placeholder=''
+                        style={{ width: '100%' }}
+                        size='large'
+                      />
                     </Form.Item>
                     <Form.Item
                       name='expireDate'
                       label={textTitle('Expire Date')}
                     >
-                      <Input size='md' borderRadius='16px' type='date' />
+                      <DatePicker
+                        placeholder=''
+                        style={{ width: '100%' }}
+                        size='large'
+                      />
                     </Form.Item>
                   </SimpleGrid>
 
@@ -409,39 +411,21 @@ export default function UserReports() {
                       label={textTitle('ON VIPA')}
                       valuePropName='checked'
                     >
-                      <SwitchField
-                        // isChecked={true}
-                        reversed={true}
-                        fontSize='sm'
-                        mb='20px'
-                        id='1'
-                      />
+                      <Switch />
                     </Form.Item>
                     <Form.Item
                       name='isThaipbs'
                       label={textTitle('ON THAIPBS')}
                       valuePropName='checked'
                     >
-                      <SwitchField
-                        // isChecked={true}
-                        reversed={true}
-                        fontSize='sm'
-                        mb='20px'
-                        id='1'
-                      />
+                      <Switch />
                     </Form.Item>
                     <Form.Item
                       label={textTitle('ON ALTV')}
                       name='isAltv'
                       valuePropName='checked'
                     >
-                      <SwitchField
-                        // isChecked={true}
-                        reversed={true}
-                        fontSize='sm'
-                        mb='20px'
-                        id='1'
-                      />
+                      <Switch />
                     </Form.Item>
                   </SimpleGrid>
                 </Form>
