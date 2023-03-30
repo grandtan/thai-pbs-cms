@@ -59,6 +59,7 @@ import axios, { AxiosInstance } from 'axios';
 import https from 'https';
 import { Input as InputAntd, Select as SelectAntd } from 'antd';
 import {
+  FormUpdate,
   MetadataAssetsRespone,
   NotificationType,
   SearchByNameRespone,
@@ -72,7 +73,7 @@ export default function UserReports() {
   const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   const textTitle = (text: string) => (
@@ -81,11 +82,6 @@ export default function UserReports() {
     </Text>
   );
 
-  const onFinish = (value: object) => {
-    // setLoading(true);
-    console.log('value', value);
-  };
-
   const openNotificationWithIcon = (status: NotificationType, text: string) => {
     api[status]({
       message: '',
@@ -93,54 +89,49 @@ export default function UserReports() {
     });
   };
 
-  const fetchUpdateData = async (data: MetadataAssetsRespone) => {
+  const fetchUpdateData = async (
+    data: MetadataAssetsRespone,
+    valueForm: FormUpdate
+  ) => {
     const payload = {
       asset_id: data.asset.asset_id,
       asset_type: data.asset.asset_type,
       asset_type_id: data.asset.asset_type_id,
       asset_type_text: data.asset.asset_type_text,
       asset_version: data.asset.asset_version,
-      comment: 'comment',
+      comment: new Date(),
       custom: {
-        field_1: 'Title Thai', //Title Thai
-        field_10: 'Title English', //Title English
-        field_11: 'Artist', //Artist
-        field_12: 'Close Caption', //Close Caption
-        field_14: 'Episode Thai Title', //Episode Thai Title
-        field_15: 'Synopsis', //Synopsis
-        field_16: false,
-        field_17: true,
-        field_18: false,
-        field_19: 'Export', //Export
-        field_2: 'Synopsis episode', //Synopsis episode
-        field_22: 'Line picture', //Line picture
-        field_23: 'เลขที่สัญญา', //เลขที่สัญญา
-        field_26: 'Description', //Description
-        field_3: 'tags', //tags
-        field_33: '1994-08-07',
-        field_4: 'None',
-        field_5: '', //Episode No.
-        field_8: '2034-11-11', //start date
-        field_9: '2035-11-11', //expire date
+        field_1: valueForm.titleThai, //Title Thai
+        field_10: valueForm.titleEnglish, //Title English
+        // field_11: 'Artist', //Artist
+        // field_12: 'Close Caption', //Close Caption
+        field_14: valueForm.episodeTitle, //Episode Thai Title
+        field_15: valueForm.synopsis, //Synopsis
+        field_16: valueForm.isvipa ? true : false, //VIPA
+        field_17: valueForm.isThaipbs ? true : false, //This pbs
+        field_18: valueForm.isAltv ? true : false, //ALTV
+        // field_19: 'Export', //Export
+        field_2: valueForm.synopsisEpisode, //Synopsis episode
+        // field_22: 'Line picture', //Line picture
+        // field_23: 'เลขที่สัญญา', //เลขที่สัญญา
+        // field_26: 'Description', //Description
+        field_3: valueForm.tage, //tags
+        // field_33: '1994-08-07',
+        // field_4: 'None',
+        field_5: valueForm.episodeNo, //Episode No.
+        field_8: valueForm.startDate, //start date
+        field_9: valueForm.episodeTitle, //expire date
       },
       customtypes: {
         field_1: 'QString',
         field_10: 'QString',
-        field_11: 'QString',
-        field_12: 'QString',
         field_14: 'QString',
         field_15: 'QString',
         field_16: 'bool',
         field_17: 'bool',
         field_18: 'bool',
-        field_19: 'QString',
         field_2: 'QString',
-        field_22: 'QString',
-        field_23: 'QString',
-        field_26: 'QString',
         field_3: 'QString',
-        field_33: 'QDate',
-        field_4: 'QString',
         field_5: 'QString',
         field_8: 'QDate',
         field_9: 'QDate',
@@ -178,7 +169,10 @@ export default function UserReports() {
     setIsLoading(false);
   };
 
-  const fetchGetDataDetails = async (clip_id: number) => {
+  const fetchGetDataDetails = async (
+    clip_id: number,
+    valueForm: FormUpdate
+  ) => {
     try {
       const axiosInstance: AxiosInstance = axios.create({
         baseURL: 'https://172.16.81.13:8006/api/v2/',
@@ -195,14 +189,12 @@ export default function UserReports() {
         `metadata/clips/${clip_id}`
       );
 
-      setIsLoading(false);
-
-      fetchUpdateData(response.data);
+      fetchUpdateData(response.data, valueForm);
     } catch (error) {
       console.error('error :', error);
     }
   };
-  const fetchData = async () => {
+  const fetchData = async (valueForm: FormUpdate) => {
     setIsLoading(true);
     try {
       const axiosInstance: AxiosInstance = axios.create({
@@ -220,11 +212,16 @@ export default function UserReports() {
         'search',
         {
           params: {
-            filename: 'test.MOV',
+            filename: valueForm.clipName,
           },
         }
       );
-      fetchGetDataDetails(response.data?.at(0)?.clip_id);
+
+      if (response.status === 200) {
+        fetchGetDataDetails(response.data?.at(0)?.clip_id, valueForm);
+      } else {
+        openNotificationWithIcon('error', 'Update Meta data failed');
+      }
     } catch (error) {
       console.error('error :', error);
     }
@@ -239,6 +236,10 @@ export default function UserReports() {
   const textColorDetails = useColorModeValue('navy.700', 'secondaryGray.600');
 
   const brandStars = useColorModeValue('brand.500', 'brand.400');
+
+  const onFinish = (value: FormUpdate) => {
+    fetchData(value);
+  };
 
   return (
     <AdminLayout>
@@ -584,7 +585,12 @@ export default function UserReports() {
                   align='center'
                   mb='24px'
                 ></Flex>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
                   <Button
                     onClick={() => formUpdate.submit()}
                     fontSize='sm'
@@ -595,6 +601,18 @@ export default function UserReports() {
                     mb='24px'
                   >
                     Submit
+                  </Button>
+                  <Button
+                    onClick={() => formUpdate.resetFields()}
+                    fontSize='sm'
+                    variant='brand'
+                    fontWeight='500'
+                    w={200}
+                    h='50'
+                    mb='24px'
+                    ml='10px'
+                  >
+                    Clear
                   </Button>
                 </div>
               </Card>

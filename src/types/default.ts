@@ -197,3 +197,21 @@ export interface Location {
 }
 
 export type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+export interface FormUpdate {
+  clipName: string;
+  titleThai: string;
+  episodeTitle: string;
+  episodeNo: string;
+  season: string;
+  titleEnglish: string;
+  genres: string;
+  synopsis: string;
+  synopsisEpisode: string;
+  tage: string;
+  startDate: string;
+  expireDate: string;
+  isvipa: string;
+  isThaipbs: string;
+  isAltv: string;
+}
