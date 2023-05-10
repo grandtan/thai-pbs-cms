@@ -133,25 +133,22 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               cursor='pointer'
             ></Text>
           </Flex>
-          <Flex flexDirection='column'>
-            <MenuItem
-              _hover={{ bg: 'none' }}
-              _focus={{ bg: 'none' }}
-              px='0'
-              borderRadius='8px'
-              mb='10px'
-            >
-              <ItemContent info='Horizon UI Dashboard PRO' />
-            </MenuItem>
-            <MenuItem
-              _hover={{ bg: 'none' }}
-              _focus={{ bg: 'none' }}
-              px='0'
-              borderRadius='8px'
-              mb='10px'
-            >
-              <ItemContent info='Horizon Design System Free' />
-            </MenuItem>
+          <Flex flexDirection='column' scrollMarginY={'500px'}>
+            {[1, 2, 3, 4, 5, 6, 67].map((e) => (
+              <MenuItem
+                key={e}
+                _hover={{ bg: 'none' }}
+                _focus={{ bg: 'none' }}
+                px='0'
+                borderRadius='8px'
+                mb='10px'
+              >
+                <ItemContent
+                  title='Success'
+                  info='test.mov : 22/04/2023 11:23:33'
+                />
+              </MenuItem>
+            ))}
           </Flex>
         </MenuList>
       </Menu>

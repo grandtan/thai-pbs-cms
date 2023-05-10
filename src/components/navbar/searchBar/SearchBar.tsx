@@ -3,30 +3,24 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  useColorModeValue
-} from '@chakra-ui/react'
-import { SearchIcon } from '@chakra-ui/icons'
-export function SearchBar (props: {
-  variant?: string
-  background?: string
-  children?: JSX.Element
-  placeholder?: string
-  borderRadius?: string | number
-  [x: string]: any
+  useColorModeValue,
+} from '@chakra-ui/react';
+import { SearchIcon } from '@chakra-ui/icons';
+export function SearchBar(props: {
+  variant?: string;
+  background?: string;
+  children?: JSX.Element;
+  placeholder?: string;
+  borderRadius?: string | number;
+  [x: string]: any;
 }) {
   // Pass the computed styles into the `__css` prop
-  const {
-    variant,
-    background,
-    children,
-    placeholder,
-    borderRadius,
-    ...rest
-  } = props
+  const { variant, background, children, placeholder, borderRadius, ...rest } =
+    props;
   // Chakra Color Mode
-  const searchIconColor = useColorModeValue('gray.700', 'white')
-  const inputBg = useColorModeValue('secondaryGray.300', 'navy.900')
-  const inputText = useColorModeValue('gray.700', 'gray.100')
+  const searchIconColor = useColorModeValue('gray.700', 'white');
+  const inputBg = useColorModeValue('secondaryGray.300', 'navy.900');
+  const inputText = useColorModeValue('gray.700', 'gray.100');
   return (
     <InputGroup w={{ base: '100%', md: '200px' }} {...rest}>
       <InputLeftElement>
@@ -37,10 +31,10 @@ export function SearchBar (props: {
           _active={{
             bg: 'inherit',
             transform: 'none',
-            borderColor: 'transparent'
+            borderColor: 'transparent',
           }}
           _focus={{
-            boxShadow: 'none'
+            boxShadow: 'none',
           }}
           icon={<SearchIcon color={searchIconColor} w='15px' h='15px' />}
         />
@@ -57,5 +51,5 @@ export function SearchBar (props: {
         placeholder={placeholder ? placeholder : 'Search...'}
       />
     </InputGroup>
-  )
+  );
 }

@@ -1,8 +1,12 @@
 // chakra imports
 import { Icon, Flex, Text, useColorModeValue } from '@chakra-ui/react';
-import { MdUpgrade } from 'react-icons/md';
+import { MdUpgrade, MdUpload, MdUpdate } from 'react-icons/md';
 
-export function ItemContent(props: { info: string }) {
+interface Props {
+  title: string;
+  info: string;
+}
+export function ItemContent({ title, info }: Props) {
   const textColor = useColorModeValue('navy.700', 'white');
   return (
     <>
@@ -17,7 +21,7 @@ export function ItemContent(props: { info: string }) {
         me='14px'
         bg='linear-gradient(135deg, #868CFF 0%, #4318FF 100%)'
       >
-        <Icon as={MdUpgrade} color='white' w={8} h={14} />
+        <Icon as={MdUpdate} color='white' w={8} h={14} />
       </Flex>
       <Flex flexDirection='column'>
         <Text
@@ -26,7 +30,7 @@ export function ItemContent(props: { info: string }) {
           color={textColor}
           fontSize={{ base: 'md', md: 'md' }}
         >
-          {props.info}
+          {title}
         </Text>
         <Flex alignItems='center'>
           <Text
@@ -34,7 +38,7 @@ export function ItemContent(props: { info: string }) {
             lineHeight='100%'
             color={textColor}
           >
-            A new update for your downloaded item is available!
+            {info}
           </Text>
         </Flex>
       </Flex>

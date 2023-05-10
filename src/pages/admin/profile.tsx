@@ -21,22 +21,22 @@
 */
 
 // Chakra imports
-import { Box, Grid } from '@chakra-ui/react'
-import AdminLayout from 'layouts/admin'
+import { Box, Grid } from '@chakra-ui/react';
+import AdminLayout from 'layouts/admin';
 
 // Custom components
-import Banner from 'views/admin/profile/components/Banner'
-import General from 'views/admin/profile/components/General'
-import Notifications from 'views/admin/profile/components/Notifications'
-import Projects from 'views/admin/profile/components/Projects'
-import Storage from 'views/admin/profile/components/Storage'
-import Upload from 'views/admin/profile/components/Upload'
+import Banner from 'views/admin/profile/components/Banner';
+import General from 'views/admin/profile/components/General';
+import Notifications from 'views/admin/profile/components/Notifications';
+import Projects from 'views/admin/profile/components/Projects';
+import Storage from 'views/admin/profile/components/Storage';
+import Upload from 'views/admin/profile/components/Upload';
 
 // Assets
-import banner from 'img/auth/banner.png'
-import avatar from 'img/avatars/avatar4.png'
+import banner from 'img/auth/banner.png';
+import avatar from 'img/avatars/avatar4.png';
 
-export default function ProfileOverview () {
+export default function ProfileOverview() {
   return (
     <AdminLayout>
       <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
@@ -44,11 +44,11 @@ export default function ProfileOverview () {
         <Grid
           templateColumns={{
             base: '1fr',
-            lg: '1.34fr 1fr 1.62fr'
+            lg: '1.34fr 1fr 1.62fr',
           }}
           templateRows={{
             base: 'repeat(3, 1fr)',
-            lg: '1fr'
+            lg: '1fr',
           }}
           gap={{ base: '20px', xl: '20px' }}
         >
@@ -70,7 +70,7 @@ export default function ProfileOverview () {
           <Upload
             gridArea={{
               base: '3 / 1 / 4 / 2',
-              lg: '1 / 3 / 2 / 4'
+              lg: '1 / 3 / 2 / 4',
             }}
             minH={{ base: 'auto', lg: '420px', '2xl': '365px' }}
             pe='20px'
@@ -82,12 +82,12 @@ export default function ProfileOverview () {
           templateColumns={{
             base: '1fr',
             lg: 'repeat(2, 1fr)',
-            '2xl': '1.34fr 1.62fr 1fr'
+            '2xl': '1.34fr 1.62fr 1fr',
           }}
           templateRows={{
             base: '1fr',
             lg: 'repeat(2, 1fr)',
-            '2xl': '1fr'
+            '2xl': '1fr',
           }}
           gap={{ base: '20px', xl: '20px' }}
         >
@@ -111,11 +111,11 @@ export default function ProfileOverview () {
             gridArea={{
               base: '3 / 1 / 4 / 2',
               lg: '2 / 1 / 3 / 3',
-              '2xl': '1 / 3 / 2 / 4'
+              '2xl': '1 / 3 / 2 / 4',
             }}
           />
         </Grid>
       </Box>
     </AdminLayout>
-  )
+  );
 }
