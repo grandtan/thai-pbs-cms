@@ -26,6 +26,7 @@ import { IoMdMoon, IoMdSunny } from 'react-icons/io';
 import { FaEthereum } from 'react-icons/fa';
 import routes from 'routes';
 import { Image } from 'components/image/Image';
+import router from 'next/router';
 export default function HeaderLinks(props: { secondary: boolean }) {
   const { secondary } = props;
   const { colorMode, toggleColorMode } = useColorMode();
@@ -98,6 +99,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
           </Text>
         </Text>
       </Flex>
+
       <SidebarResponsive routes={routes} />
       <Menu>
         <MenuButton p='0px'>
@@ -133,8 +135,8 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               cursor='pointer'
             ></Text>
           </Flex>
-          <Flex flexDirection='column' scrollMarginY={'500px'}>
-            {[1, 2, 3, 4, 5, 6, 67].map((e) => (
+          {/* <Flex flexDirection='column' scrollMarginY={'300px'}>
+            {[1].map((e) => (
               <MenuItem
                 key={e}
                 _hover={{ bg: 'none' }}
@@ -149,12 +151,12 @@ export default function HeaderLinks(props: { secondary: boolean }) {
                 />
               </MenuItem>
             ))}
-          </Flex>
+          </Flex> */}
         </MenuList>
       </Menu>
 
       <Menu>
-        <MenuButton p='0px'>
+        {/* <MenuButton p='0px'>
           <Icon
             mt='6px'
             as={MdInfoOutline}
@@ -163,7 +165,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
             h='18px'
             me='10px'
           />
-        </MenuButton>
+        </MenuButton> */}
         <MenuList
           boxShadow={shadow}
           p='20px'
@@ -214,7 +216,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
           </Flex>
         </MenuList>
       </Menu>
-
+      {/* 
       <Button
         variant='no-hover'
         bg='transparent'
@@ -232,7 +234,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
           color={navbarIcon}
           as={colorMode === 'light' ? IoMdMoon : IoMdSunny}
         />
-      </Button>
+      </Button> */}
       <Menu>
         <MenuButton p='0px'>
           <Avatar
@@ -265,11 +267,11 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               fontWeight='700'
               color={textColor}
             >
-              👋&nbsp; Hey, Adela
+              👋&nbsp; admin@gmail.com
             </Text>
           </Flex>
           <Flex flexDirection='column' p='10px'>
-            <MenuItem
+            {/* <MenuItem
               _hover={{ bg: 'none' }}
               _focus={{ bg: 'none' }}
               borderRadius='8px'
@@ -284,13 +286,14 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               px='14px'
             >
               <Text fontSize='sm'>Newsletter Settings</Text>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               _hover={{ bg: 'none' }}
               _focus={{ bg: 'none' }}
               color='red.400'
               borderRadius='8px'
               px='14px'
+              onClick={() => router.push('/auth/sign-in')}
             >
               <Text fontSize='sm'>Log out</Text>
             </MenuItem>

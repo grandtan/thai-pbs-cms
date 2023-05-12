@@ -37,10 +37,10 @@ export default function Footer(props: { [x: string]: any }) {
         mb={{ base: '20px', lg: '0px' }}
       >
         {' '}
-        &copy; {new Date().getFullYear()}
-        <Text as='span' fontWeight='500' ms='4px'>
+        {/* &copy; {new Date().getFullYear()} */}
+        {/* <Text as='span' fontWeight='500' ms='4px'>
           by Wedchayun Sorat!
-        </Text>
+        </Text> */}
       </Text>
       <List display='flex'>
         <ListItem

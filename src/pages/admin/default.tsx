@@ -189,7 +189,9 @@ export default function UserReports() {
         `metadata/clips/${clip_id}`
       );
 
-      fetchUpdateData(response.data, valueForm);
+      if (response?.data) {
+        fetchUpdateData(response.data, valueForm);
+      }
     } catch (error) {
       console.error('error :', error);
     }
@@ -217,7 +219,7 @@ export default function UserReports() {
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 200 && response.data?.at(0).clip_id) {
         fetchGetDataDetails(response.data?.at(0)?.clip_id, valueForm);
       } else {
         openNotificationWithIcon('error', 'Update Meta data failed');
@@ -306,7 +308,7 @@ export default function UserReports() {
                   </a>
                 </div>
               </Card>
-              <Card
+              {/* <Card
                 flexDirection='column'
                 w='100%'
                 px='0px'
@@ -348,7 +350,7 @@ export default function UserReports() {
                     pb={{ base: '100px', lg: '20px' }}
                   />
                 </div>
-              </Card>
+              </Card> */}
               <Card
                 flexDirection='column'
                 w='100%'
