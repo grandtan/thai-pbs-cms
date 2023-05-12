@@ -225,6 +225,8 @@ export default function UserReports() {
         openNotificationWithIcon('error', 'Update Meta data failed');
       }
     } catch (error) {
+      openNotificationWithIcon('error', 'Update Meta data failed');
+      setIsLoading(false);
       console.error('error :', error);
     }
   };
