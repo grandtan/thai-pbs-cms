@@ -5,10 +5,12 @@ import {
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
+  MdOutlineContactPage,
 } from 'react-icons/md';
 
 // Admin Imports
 import MainDashboard from 'pages/admin/default';
+import Generate from 'pages/admin/generate-url';
 import NFTMarketplace from 'pages/admin/nft-marketplace';
 import Profile from 'pages/admin/profile';
 import DataTables from 'pages/admin/data-tables';
@@ -25,6 +27,20 @@ const routes: IRoute[] = [
     path: '/default',
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
+  },
+  {
+    name: 'Generate URL',
+    layout: '/admin',
+    path: '/generate-url',
+    icon: (
+      <Icon
+        as={MdOutlineContactPage}
+        width='20px'
+        height='20px'
+        color='inherit'
+      />
+    ),
+    component: Generate,
   },
   // {
   //   name: 'NFT Marketplace',
