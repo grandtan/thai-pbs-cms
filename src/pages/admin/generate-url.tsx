@@ -72,7 +72,7 @@ export default function Generate() {
 
   const handleGenerate = () => {
     setIsCopy(true);
-    copy('http://localhost:3000/auth/sign-in?id:' + url);
+    copy('http://localhost:3000/auth/sign-in?id=' + url);
     openNotificationWithIcon('success', 'Generated');
   };
 

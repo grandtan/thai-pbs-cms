@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import {
   Box,
@@ -10,11 +10,13 @@ import {
 } from '@chakra-ui/react';
 import { HSeparator } from 'components/separator/Separator';
 import { useRouter } from 'next/router';
+import { useMyContext } from 'contexts/MyContext';
 
 const LoginPage = () => {
   const router = useRouter();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { value, setValue } = useMyContext();
 
   const textColor = useColorModeValue('navy.700', 'white');
 
@@ -22,7 +24,6 @@ const LoginPage = () => {
     '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
     '14px 17px 40px 4px rgba(112, 144, 176, 0.06)'
   );
-  const [show, setShow] = React.useState(false);
 
   const onFinish = (values: any) => {
     setLoading(true);
@@ -37,6 +38,14 @@ const LoginPage = () => {
 
     // setLoading(false);
   };
+
+  useEffect(() => {
+    if (router.query.id) {
+      setValue(router.query.id as string);
+      console.log('ssss :');
+    }
+  }, [router.query.id]);
+
   const bgColor = 'linear-gradient(135deg, #868CFF 0%, #4318FF 100%)';
   return (
     <div

@@ -10,6 +10,7 @@ import 'styles/Contact.css';
 import 'react-calendar/dist/Calendar.css';
 import 'styles/MiniCalendar.css';
 import Head from 'next/head';
+import { MyContextProvider } from 'contexts/MyContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -21,7 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <React.StrictMode>
-        <Component {...pageProps} />
+        <MyContextProvider>
+          <Component {...pageProps} />
+        </MyContextProvider>
       </React.StrictMode>
     </ChakraProvider>
   );

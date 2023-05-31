@@ -65,16 +65,14 @@ import {
   SearchByNameRespone,
 } from 'types/default';
 import { FaSadCry } from 'react-icons/fa';
+import { useMyContext } from 'contexts/MyContext';
 const { TextArea } = InputAntd;
 
 export default function UserReports() {
   const [formUpdate] = Form.useForm();
+  const { value } = useMyContext();
   const [isLoading, setIsLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
-
-  useEffect(() => {
-    // fetchData();
-  }, []);
 
   const textTitle = (text: string) => (
     <Text color={textColorPrimary} fontWeight='500' fontSize='md' mb='4px'>
@@ -291,11 +289,7 @@ export default function UserReports() {
                   mb='24px'
                 ></Flex>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <a
-                    target='_blank'
-                    href='https://ingestprogram.thaipbs.or.th/sharing/brFaHySol'
-                    rel='noopener noreferrer'
-                  >
+                  <a target='_blank' href={value} rel='noopener noreferrer'>
                     <Button
                       onClick={() => formUpdate.submit()}
                       fontSize='sm'
@@ -304,6 +298,7 @@ export default function UserReports() {
                       w={200}
                       h='50'
                       mb='24px'
+                      disabled={value ? false : true}
                     >
                       Click Upload
                     </Button>
