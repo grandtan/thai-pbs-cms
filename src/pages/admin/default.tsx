@@ -73,6 +73,24 @@ export default function UserReports() {
   const { value } = useMyContext();
   const [isLoading, setIsLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
+  const [data, setData] = useState<FormUpdate[]>([]);
+
+  useEffect(() => {
+    const cachedData = localStorage.getItem('MetaData');
+    if (cachedData) {
+      setData(JSON.parse(cachedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // data.map((x) => fetchData(x));
+      // openNotificationWithIcon('success', 'Update [Name File] successfully');
+    }, 10000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   const textTitle = (text: string) => (
     <Text color={textColorPrimary} fontWeight='500' fontSize='md' mb='4px'>
@@ -84,6 +102,7 @@ export default function UserReports() {
     api[status]({
       message: '',
       description: textTitle(text),
+      duration: 0,
     });
   };
 
@@ -154,9 +173,15 @@ export default function UserReports() {
       );
 
       if (response.status === 200) {
-        openNotificationWithIcon('success', 'Update Meta data successfully');
+        openNotificationWithIcon(
+          'success',
+          `Update ${valueForm?.clipName} successfully`
+        );
       } else {
-        openNotificationWithIcon('error', 'Update Meta data failed');
+        openNotificationWithIcon(
+          'error',
+          `Update ${valueForm?.clipName} failed`
+        );
       }
 
       console.log('ddd: ', response.data);
@@ -194,6 +219,7 @@ export default function UserReports() {
       console.error('error :', error);
     }
   };
+
   const fetchData = async (valueForm: FormUpdate) => {
     setIsLoading(true);
     try {
@@ -220,10 +246,10 @@ export default function UserReports() {
       if (response.status === 200 && response.data?.at(0).clip_id) {
         fetchGetDataDetails(response.data?.at(0)?.clip_id, valueForm);
       } else {
-        openNotificationWithIcon('error', 'Update Meta data failed');
+        // openNotificationWithIcon('error', 'Update Meta data failed');
       }
     } catch (error) {
-      openNotificationWithIcon('error', 'Update Meta data failed');
+      // openNotificationWithIcon('error', 'Update Meta data failed');
       setIsLoading(false);
       console.error('error :', error);
     }
@@ -240,9 +266,12 @@ export default function UserReports() {
   const brandStars = useColorModeValue('brand.500', 'brand.400');
 
   const onFinish = (value: FormUpdate) => {
-    fetchData(value);
+    const payload = [...data, value];
+    setData(payload);
+    localStorage.setItem('MetaData', JSON.stringify(payload));
   };
 
+  console.log('data', data);
   return (
     <AdminLayout>
       {contextHolder}
