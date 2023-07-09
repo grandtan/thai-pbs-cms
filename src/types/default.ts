@@ -214,4 +214,5 @@ export interface FormUpdate {
   isvipa: string;
   isThaipbs: string;
   isAltv: string;
+  countCall?: number;
 }
