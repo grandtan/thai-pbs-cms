@@ -6,11 +6,13 @@ import {
   MdLock,
   MdOutlineShoppingCart,
   MdOutlineContactPage,
+  MdOutlineVerifiedUser
 } from 'react-icons/md';
 
 // Admin Imports
 import MainDashboard from 'pages/admin/default';
 import Generate from 'pages/admin/generate-url';
+import CreateUser from 'pages/admin/create-user';
 import NFTMarketplace from 'pages/admin/nft-marketplace';
 import Profile from 'pages/admin/profile';
 import DataTables from 'pages/admin/data-tables';
@@ -41,6 +43,20 @@ const routes: IRoute[] = [
       />
     ),
     component: Generate,
+  },
+  {
+    name: 'Create User',
+    layout: '/admin',
+    path: '/create-user',
+    icon: (
+      <Icon
+        as={MdOutlineVerifiedUser}
+        width='20px'
+        height='20px'
+        color='inherit'
+      />
+    ),
+    component: CreateUser,
   },
   // {
   //   name: 'NFT Marketplace',

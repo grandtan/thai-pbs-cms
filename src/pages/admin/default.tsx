@@ -138,7 +138,7 @@ export default function UserReports() {
 
     try {
       const axiosInstance: AxiosInstance = axios.create({
-        baseURL: 'https://172.16.81.13:8006/api/v2/',
+        baseURL: 'https://airflow.thaipbs.or.th:8006/api/v2/',
         httpsAgent: new https.Agent({
           rejectUnauthorized: false,
         }),
@@ -173,7 +173,7 @@ export default function UserReports() {
   ) => {
     try {
       const axiosInstance: AxiosInstance = axios.create({
-        baseURL: 'https://172.16.81.13:8006/api/v2/',
+        baseURL: 'https://airflow.thaipbs.or.th:8006/api/v2/',
         httpsAgent: new https.Agent({
           rejectUnauthorized: false,
         }),
@@ -198,7 +198,7 @@ export default function UserReports() {
     setIsLoading(true);
     try {
       const axiosInstance: AxiosInstance = axios.create({
-        baseURL: 'https://172.16.81.13:8006/api/v2/',
+        baseURL: 'https://airflow.thaipbs.or.th:8006/api/v2/',
         httpsAgent: new https.Agent({
           rejectUnauthorized: false,
         }),
