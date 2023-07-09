@@ -1,25 +1,3 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 import {
   Avatar,
   Box,
@@ -49,7 +27,14 @@ import Card from 'components/card/Card';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Form, notification, Spin, Switch } from 'antd';
+import {
+  DatePicker,
+  Form,
+  notification,
+  Spin,
+  Switch,
+  Button as ButtonAntd,
+} from 'antd';
 import { listGenres, listSeason } from 'utils/list';
 import { LoadingOutlined } from '@ant-design/icons';
 import Dropzone from 'react-dropzone';
@@ -73,6 +58,34 @@ export default function UserReports() {
   const { value } = useMyContext();
   const [isLoading, setIsLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
+  const [dataMetaData, setDataMetaData] = useState<FormUpdate[]>([]);
+
+  useEffect(() => {
+    const cachedData = localStorage.getItem('MetaData');
+    if (cachedData) {
+      setDataMetaData(JSON.parse(cachedData));
+    }
+  }, []);
+
+  let count = 0;
+
+  useEffect(() => {
+    if (!dataMetaData?.length) return;
+
+    const interval = setInterval(() => {
+      dataMetaData.map((x) => fetchData(x));
+      count++;
+
+      if (count >= 10000) {
+        localStorage.setItem('MetaData', JSON.stringify([]));
+        clearInterval(interval);
+      }
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [dataMetaData]);
 
   const textTitle = (text: string) => (
     <Text color={textColorPrimary} fontWeight='500' fontSize='md' mb='4px'>
@@ -81,6 +94,16 @@ export default function UserReports() {
   );
 
   const openNotificationWithIcon = (status: NotificationType, text: string) => {
+    api[status]({
+      message: '',
+      description: textTitle(text),
+      duration: 0,
+    });
+  };
+  const openNotificationClearWithIcon = (
+    status: NotificationType,
+    text: string
+  ) => {
     api[status]({
       message: '',
       description: textTitle(text),
@@ -154,9 +177,15 @@ export default function UserReports() {
       );
 
       if (response.status === 200) {
-        openNotificationWithIcon('success', 'Update Meta data successfully');
+        openNotificationWithIcon(
+          'success',
+          `Update ${valueForm?.clipName} successfully`
+        );
       } else {
-        openNotificationWithIcon('error', 'Update Meta data failed');
+        openNotificationWithIcon(
+          'error',
+          `Update ${valueForm?.clipName} failed`
+        );
       }
 
       console.log('ddd: ', response.data);
@@ -164,7 +193,7 @@ export default function UserReports() {
       console.error('error :', error);
     }
 
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   const fetchGetDataDetails = async (
@@ -188,14 +217,24 @@ export default function UserReports() {
       );
 
       if (response?.data) {
+        const payload = dataMetaData.filter(
+          (x) =>
+            x.clipName.toUpperCase() !==
+            response?.data?.metadata.clip_name_with_extension.toUpperCase()
+        );
+
+        setDataMetaData(payload);
+        localStorage.setItem('MetaData', JSON.stringify(payload));
+
         fetchUpdateData(response.data, valueForm);
       }
     } catch (error) {
       console.error('error :', error);
     }
   };
+
   const fetchData = async (valueForm: FormUpdate) => {
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
       const axiosInstance: AxiosInstance = axios.create({
         baseURL: 'https://airflow.thaipbs.or.th:8006/api/v2/',
@@ -217,14 +256,22 @@ export default function UserReports() {
         }
       );
 
-      if (response.status === 200 && response.data?.at(0).clip_id) {
+      if (response.data?.length === 0) {
+        // const newData = dataMetaData.map((item) => ({
+        //   ...item,
+        //   countCall: (item.countCall ?? 0) + 1,
+        // }));
+        // const list = [...dataMetaData, ...newData].filter(
+        //   (x) => x.countCall < 30
+        // );
+        // setDataMetaData([...dataMetaData, ...list]);
+        // localStorage.setItem('MetaData', JSON.stringify(newData));
+      }
+      if (response.status === 200 && response.data[0]?.clip_id) {
         fetchGetDataDetails(response.data?.at(0)?.clip_id, valueForm);
-      } else {
-        openNotificationWithIcon('error', 'Update Meta data failed');
       }
     } catch (error) {
-      openNotificationWithIcon('error', 'Update Meta data failed');
-      setIsLoading(false);
+      // setIsLoading(false);
       console.error('error :', error);
     }
   };
@@ -240,9 +287,18 @@ export default function UserReports() {
   const brandStars = useColorModeValue('brand.500', 'brand.400');
 
   const onFinish = (value: FormUpdate) => {
+    const payload = [...dataMetaData, { ...value, countCall: 1 }];
+
+    setDataMetaData(payload);
+    localStorage.setItem('MetaData', JSON.stringify(payload));
     fetchData(value);
+    openNotificationClearWithIcon(
+      'info',
+      `Update ${value?.clipName} In Progress`
+    );
   };
 
+  console.log('data', dataMetaData);
   return (
     <AdminLayout>
       {contextHolder}
@@ -290,18 +346,12 @@ export default function UserReports() {
                 ></Flex>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <a target='_blank' href={value} rel='noopener noreferrer'>
-                    <Button
-                      onClick={() => formUpdate.submit()}
-                      fontSize='sm'
-                      variant='brand'
-                      fontWeight='500'
-                      w={200}
-                      h='50'
-                      mb='24px'
-                      disabled={value ? false : true}
+                    <ButtonAntd
+                      style={{ width: 200, height: 50, borderRadius: 10 }}
+                      // disabled={value ? false : true}
                     >
                       Click Upload
-                    </Button>
+                    </ButtonAntd>
                   </a>
                 </div>
               </Card>
